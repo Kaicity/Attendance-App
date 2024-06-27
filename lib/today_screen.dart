@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:slide_to_act/slide_to_act.dart';
 
 class TodayScreen extends StatefulWidget {
   const TodayScreen({Key? key}) : super(key: key);
@@ -11,6 +12,8 @@ class TodayScreen extends StatefulWidget {
 class _TodayScreenState extends State<TodayScreen> {
   double screenHeight = 0;
   double screenWidth = 0;
+
+  Color primary = const Color(0xFFEEF444C);
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +58,7 @@ class _TodayScreenState extends State<TodayScreen> {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(top: 12),
+              margin: EdgeInsets.only(top: 12, bottom: 32),
               height: 150,
               decoration: const BoxDecoration(
                 color: Colors.white,
@@ -112,7 +115,7 @@ class _TodayScreenState extends State<TodayScreen> {
                                 color: Colors.black54),
                           ),
                           Text(
-                            "09:30",
+                            "--/--",
                             style: TextStyle(
                               fontFamily: "NexaBold",
                               fontSize: screenWidth / 18,
@@ -124,6 +127,54 @@ class _TodayScreenState extends State<TodayScreen> {
                   ),
                 ],
               ),
+            ),
+            Container(
+              alignment: Alignment.centerLeft,
+              child: RichText(
+                text: TextSpan(
+                    text: "01",
+                    style:
+                        TextStyle(color: primary, fontSize: screenWidth / 20),
+                    children: [
+                      TextSpan(
+                        text: " Tháng 6 2024",
+                        style: TextStyle(
+                            fontSize: screenWidth / 20,
+                            color: Colors.black,
+                            fontFamily: "NexaBold"),
+                      ),
+                    ]),
+              ),
+            ),
+            Container(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "17:30:00",
+                style: TextStyle(
+                    fontFamily: "NexaRegular",
+                    fontSize: screenWidth / 20,
+                    color: Colors.black54),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 24),
+              child: Builder(builder: (context) {
+                final GlobalKey<SlideActionState> key = GlobalKey();
+
+                return SlideAction(
+                  text: "Trượt để Check Out",
+                  textStyle: TextStyle(
+                      color: Colors.black54,
+                      fontSize: screenWidth / 20,
+                      fontFamily: "NexaRegular"),
+                  outerColor: Colors.white,
+                  innerColor: primary,
+                  key: key,
+                  onSubmit: () {
+                    key.currentState!.reset();
+                  },
+                );
+              }),
             ),
           ],
         ),
