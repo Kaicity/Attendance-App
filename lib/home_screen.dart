@@ -1,8 +1,11 @@
 import 'package:attendance_app/calendar_screen.dart';
+import 'package:attendance_app/model/User.dart';
 import 'package:attendance_app/profile_screen.dart';
 import 'package:attendance_app/today_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -25,6 +28,35 @@ class _HomeScreenState extends State<HomeScreen> {
 
   int currentIndex = 0;
 
+  late SharedPreferences sharedPreferences;
+
+  @override
+  void initState() {
+    super.initState();
+    _getId();
+    _startTodayScreen();
+  }
+
+  _startTodayScreen() {
+    setState(() {
+      currentIndex = 1;
+    });
+  }
+
+  _getId() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    if (sharedPreferences.getString("memberId") != null) {
+      QuerySnapshot snap = await FirebaseFirestore.instance
+          .collection('Member')
+          .where('id', isEqualTo: sharedPreferences.getString("memberId"))
+          .get();
+
+      setState(() {
+        User.id = snap.docs[0].id;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
@@ -34,9 +66,9 @@ class _HomeScreenState extends State<HomeScreen> {
       body: IndexedStack(
         index: currentIndex,
         children: [
-          CalendarScreen(),
-          TodayScreen(),
-          ProfileScreen(),
+          new CalendarScreen(),
+          new TodayScreen(),
+          new ProfileScreen(),
         ],
       ),
       bottomNavigationBar: Container(

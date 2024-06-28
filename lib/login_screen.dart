@@ -117,6 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               sharedPreferences =
                               await SharedPreferences.getInstance();
 
+                              //Luu thong tin memberId
                               sharedPreferences
                                   .setString("memberId", id)
                                   .then((_) {

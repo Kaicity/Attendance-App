@@ -1,7 +1,9 @@
 import 'package:attendance_app/home_screen.dart';
+import 'package:attendance_app/model/user.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'login_screen.dart';
@@ -28,6 +30,9 @@ class MyApp extends StatelessWidget {
       home: const KeyboardVisibilityProvider(
         child: AuthCheck(),
       ),
+      localizationsDelegates: [
+
+      ],
     );
   }
 }
@@ -57,6 +62,7 @@ class _AuthCheckState extends State<AuthCheck> {
     try {
       if (sharedPreferences.getString('memberId') != null) {
         setState(() {
+          User.username = sharedPreferences.getString('memberId')!;
           userAvailable = true;
         });
       }
