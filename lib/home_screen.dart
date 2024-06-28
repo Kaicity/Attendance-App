@@ -1,11 +1,13 @@
 import 'package:attendance_app/calendar_screen.dart';
-import 'package:attendance_app/model/User.dart';
 import 'package:attendance_app/profile_screen.dart';
+import 'package:attendance_app/services/location_service.dart';
 import 'package:attendance_app/today_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'model/User.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -33,13 +35,33 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    _startLocationService();
     _getId();
     _startTodayScreen();
   }
 
-  _startTodayScreen() {
+  void _startTodayScreen() {
     setState(() {
       currentIndex = 1;
+    });
+  }
+
+  void _startLocationService() async {
+    // Khoi tao service lay toa do vi tri user
+    LocationService().initialize();
+
+    //get latitude
+    LocationService().getLatitude().then((value) {
+      setState(() {
+        User.lat = value!;
+      });
+    });
+
+    //get longitude
+    LocationService().getLongitude().then((value) {
+      setState(() {
+        User.long = value!;
+      });
     });
   }
 

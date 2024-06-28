@@ -29,7 +29,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
     return Scaffold(
         body: SingleChildScrollView(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       child: Column(
         children: [
           Container(
@@ -59,9 +59,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 ),
               ),
               Container(
-                margin: const EdgeInsets.only(
-                  top: 32, right: 24
-                ),
+                margin: const EdgeInsets.only(top: 32, right: 24),
                 alignment: Alignment.centerRight,
                 child: GestureDetector(
                   onTap: () async {
@@ -71,6 +69,9 @@ class _CalendarScreenState extends State<CalendarScreen> {
                       firstDate: DateTime(2024),
                       lastDate: DateTime(2099),
                       headerColor: primary,
+                      selectedMonthBackgroundColor: primary,
+                      selectedMonthTextColor: Colors.white,
+                      currentMonthTextColor: Colors.green,
                     );
 
                     if (month != null) {
@@ -121,8 +122,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                       .format(snap[index]['date'].toDate()) ==
                                   monthPicked
                               ? Container(
-                                  margin: const EdgeInsets.only(
-                                      top: 12, left: 6, right: 6),
+                                  margin: EdgeInsets.only(
+                                      top: index > 0 ? 12 : 0,
+                                      left: 6,
+                                      right: 6),
                                   height: 150,
                                   decoration: const BoxDecoration(
                                     color: Colors.white,
@@ -166,55 +169,51 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                         ),
                                       ),
                                       Expanded(
-                                        child: Container(
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                "Check In",
-                                                style: TextStyle(
-                                                    fontFamily: "NexaRegular",
-                                                    fontSize: screenWidth / 20,
-                                                    color: Colors.black54),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              "Check In",
+                                              style: TextStyle(
+                                                  fontFamily: "NexaRegular",
+                                                  fontSize: screenWidth / 20,
+                                                  color: Colors.black54),
+                                            ),
+                                            Text(
+                                              snap[index]['checkIn'],
+                                              style: TextStyle(
+                                                fontFamily: "NexaBold",
+                                                fontSize: screenWidth / 18,
                                               ),
-                                              Text(
-                                                snap[index]['checkIn'],
-                                                style: TextStyle(
-                                                  fontFamily: "NexaBold",
-                                                  fontSize: screenWidth / 18,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                       Expanded(
-                                        child: Container(
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                "Check Out",
-                                                style: TextStyle(
-                                                    fontFamily: "NexaRegular",
-                                                    fontSize: screenWidth / 20,
-                                                    color: Colors.black54),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              "Check Out",
+                                              style: TextStyle(
+                                                  fontFamily: "NexaRegular",
+                                                  fontSize: screenWidth / 20,
+                                                  color: Colors.black54),
+                                            ),
+                                            Text(
+                                              snap[index]['checkOut'],
+                                              style: TextStyle(
+                                                fontFamily: "NexaBold",
+                                                fontSize: screenWidth / 18,
                                               ),
-                                              Text(
-                                                snap[index]['checkOut'],
-                                                style: TextStyle(
-                                                  fontFamily: "NexaBold",
-                                                  fontSize: screenWidth / 18,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ],
