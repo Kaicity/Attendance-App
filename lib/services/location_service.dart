@@ -5,21 +5,21 @@ class LocationService {
   late LocationData _locData;
 
   Future<void> initialize() async {
-    bool _serviceEnable;
-    PermissionStatus _permission;
+    bool serviceEnable;
+    PermissionStatus permission;
 
-    _serviceEnable = await location.serviceEnabled();
-    if (!_serviceEnable) {
-      _serviceEnable = await location.requestService();
-      if (!_serviceEnable) {
+    serviceEnable = await location.serviceEnabled();
+    if (!serviceEnable) {
+      serviceEnable = await location.requestService();
+      if (!serviceEnable) {
         return;
       }
     }
 
-    _permission = await location.hasPermission();
-    if (_permission == PermissionStatus.denied) {
-      _permission = await location.requestPermission();
-      if (_permission != PermissionStatus.granted) {
+    permission = await location.hasPermission();
+    if (permission == PermissionStatus.denied) {
+      permission = await location.requestPermission();
+      if (permission != PermissionStatus.granted) {
         return;
       }
     }

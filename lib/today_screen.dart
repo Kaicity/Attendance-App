@@ -29,15 +29,16 @@ class _TodayScreenState extends State<TodayScreen> {
   @override
   void initState() {
     _getRecord();
+    _getLocation();
   }
 
   void _getLocation() async {
     List<Placemark> placeMark =
-        await placemarkFromCoordinates(User.lat, User.long);
+        await placemarkFromCoordinates(10.80122445836482, 106.66061706752899);
 
     setState(() {
       location =
-          "${placeMark[0].street}, ${placeMark[0].administrativeArea}, ${placeMark[0].postalCode}, ${placeMark[0].country}";
+          "${placeMark[0].street}, ${placeMark[0].administrativeArea}, ${placeMark[0].postalCode} ${placeMark[0].country}";
     });
   }
 
@@ -280,7 +281,7 @@ class _TodayScreenState extends State<TodayScreen> {
                                 'checkIn': checkIn,
                                 'checkOut':
                                     DateFormat('hh:mm').format(DateTime.now()),
-                                'location': location
+                                'checkInLocation': location
                               });
                             } catch (e) {
                               setState(() {
@@ -299,7 +300,7 @@ class _TodayScreenState extends State<TodayScreen> {
                                 'checkIn':
                                     DateFormat('hh:mm').format(DateTime.now()),
                                 'checkOut': '--/--',
-                                'location': location
+                                'checkOutLocation': location
                               });
                             }
                             key.currentState!.reset();
@@ -380,7 +381,7 @@ class _TodayScreenState extends State<TodayScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        margin: EdgeInsets.only(top: 32),
+                        margin: const EdgeInsets.only(top: 32, bottom: 30),
                         child: Text(
                           "You have complete today!",
                           style: TextStyle(
@@ -391,7 +392,7 @@ class _TodayScreenState extends State<TodayScreen> {
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(top: 22, left: 5),
+                        margin: const EdgeInsets.only(bottom: 5),
                         child: Icon(
                           Icons.star_border,
                           size: screenWidth / 18,
@@ -403,7 +404,17 @@ class _TodayScreenState extends State<TodayScreen> {
             //Da check out hint slider action
 
             //location
-            location != " " ? Text("Location: " + location) : const SizedBox(),
+            location != " "
+                ? Text(
+                    textAlign: TextAlign.center,
+                    "Location: $location",
+                    style: TextStyle(
+                      fontFamily: "NexaBold",
+                      fontSize: screenWidth / 28,
+                      color: Colors.black54,
+                    ),
+                  )
+                : const SizedBox(),
           ],
         ),
       ),
