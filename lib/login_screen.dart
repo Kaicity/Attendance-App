@@ -46,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 5,
               )
                   : Container(
-                height: screenHeight / 2.5,
+                height: screenHeight / 2.8,
                 width: screenWidth,
                 decoration: BoxDecoration(
                   color: primary,
@@ -65,7 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 margin: EdgeInsets.only(
                     top: screenHeight / 15, bottom: screenHeight / 30),
                 child: Text(
-                  "Đăng nhập tài khoản",
+                  "Login Account",
                   style: TextStyle(
                       fontSize: screenWidth / 18, fontFamily: "NexaBold"),
                 ),
@@ -76,14 +76,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    fieldTitle("Thành Viên ID: "),
+                    fieldTitle("Member ID: "),
                     customeField(
-                        "Nhập ID của bạn", idController, Icons.person, false),
+                        "Enter your ID", idController, Icons.person, false),
                     const SizedBox(
                       height: 15,
                     ),
-                    fieldTitle("Mật khẩu: "),
-                    customeField("Nhập mật khẩu của bạn", passController,
+                    fieldTitle("Password "),
+                    customeField("Enter your password: ", passController,
                         Icons.lock, true),
                     GestureDetector(
                       onTap: () async {
@@ -95,14 +95,16 @@ class _LoginScreenState extends State<LoginScreen> {
                         if (id.isEmpty) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
+                              showCloseIcon: true,
                               content:
-                              Text("ID thành viên không được để trống"),
+                              Text("Member ID is still"),
                             ),
                           );
                         } else if (password.isEmpty) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                              content: Text("Mật khẩu không được để trống"),
+                              showCloseIcon: true,
+                              content: Text("Password is still"),
                             ),
                           );
                         } else {
@@ -130,8 +132,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
+                                      showCloseIcon: true,
                                       content:
-                                      Text("Mật khẩu không chính xác!")));
+                                      Text("Password is incorrect")));
                             }
                           } catch (e) {
                             String error = " ";
@@ -139,16 +142,17 @@ class _LoginScreenState extends State<LoginScreen> {
                             if (e.toString() ==
                                 "RangeError (index): Invalid value: Valid value range is empty: 0") {
                               setState(() {
-                                error = "Thành viên không tồn tại";
+                                error = "Member is not exist";
                               });
                             } else {
                               setState(() {
-                                error = "Có lỗi xảy ra";
+                                error = "Have error";
                               });
                             }
 
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
+                                showCloseIcon: true,
                                 content: Text(error),
                               ),
                             );
@@ -167,7 +171,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         child: const Center(
                           child: Text(
-                            "Đăng nhập",
+                            "Login",
                             style: TextStyle(
                               color: Colors.white,
                               fontFamily: "NexaBold",
@@ -230,7 +234,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           Expanded(
             child: Padding(
-              padding: EdgeInsets.only(right: screenWidth / 6),
+              padding: EdgeInsets.only(right: screenWidth / 4),
               child: TextFormField(
                 controller: controllerGetValue,
                 enableSuggestions: false,

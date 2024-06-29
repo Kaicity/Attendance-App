@@ -43,13 +43,13 @@ class _CalendarScreenState extends State<CalendarScreen> {
                   TextStyle(fontFamily: "NexaBold", fontSize: screenWidth / 18),
             ),
           ),
-          Stack(
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
                 margin: const EdgeInsets.only(
                   top: 32,
                 ),
-                alignment: Alignment.centerLeft,
                 child: Text(
                   monthPicked,
                   style: TextStyle(
@@ -58,45 +58,46 @@ class _CalendarScreenState extends State<CalendarScreen> {
                   ),
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.only(top: 32, right: 24),
-                alignment: Alignment.centerRight,
-                child: GestureDetector(
-                  onTap: () async {
-                    final month = await showMonthPicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(2024),
-                      lastDate: DateTime(2099),
-                      headerColor: primary,
-                      selectedMonthBackgroundColor: primary,
-                      selectedMonthTextColor: Colors.white,
-                      currentMonthTextColor: Colors.green,
-                    );
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(top: 32),
+                    child: GestureDetector(
+                      onTap: () async {
+                        final month = await showMonthPicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(2024),
+                          lastDate: DateTime(2099),
+                          headerColor: primary,
+                          selectedMonthBackgroundColor: primary,
+                          selectedMonthTextColor: Colors.white,
+                          currentMonthTextColor: Colors.green,
+                        );
 
-                    if (month != null) {
-                      setState(() {
-                        monthPicked = DateFormat('MMMM').format(month);
-                      });
-                    }
-                  },
-                  child: Text(
-                    "Pick a Month",
-                    style: TextStyle(
-                        fontFamily: "NexaBold", fontSize: screenWidth / 18),
+                        if (month != null) {
+                          setState(() {
+                            monthPicked = DateFormat('MMMM').format(month);
+                          });
+                        }
+                      },
+                      child: Text(
+                        "Pick a Month",
+                        style: TextStyle(
+                            fontFamily: "NexaBold", fontSize: screenWidth / 18),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(
-                  top: 34,
-                ),
-                alignment: Alignment.centerRight,
-                child: Icon(
-                  Icons.calendar_month,
-                  color: primary,
-                  size: screenWidth / 20,
-                ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 26),
+                    child: Icon(
+                      Icons.calendar_month,
+                      color: primary,
+                      size: screenWidth / 16,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -175,14 +176,14 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                             "Check In",
                                             style: TextStyle(
                                                 fontFamily: "NexaRegular",
-                                                fontSize: screenWidth / 20,
+                                                fontSize: screenWidth / 28,
                                                 color: Colors.black54),
                                           ),
                                           Text(
                                             snap[index]['checkIn'],
                                             style: TextStyle(
                                               fontFamily: "NexaBold",
-                                              fontSize: screenWidth / 18,
+                                              fontSize: screenWidth / 22,
                                             ),
                                           ),
                                         ],
@@ -199,14 +200,15 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                             "Check Out",
                                             style: TextStyle(
                                                 fontFamily: "NexaRegular",
-                                                fontSize: screenWidth / 20,
+                                                fontSize: screenWidth / 28,
                                                 color: Colors.black54),
                                           ),
                                           Text(
                                             snap[index]['checkOut'],
                                             style: TextStyle(
                                               fontFamily: "NexaBold",
-                                              fontSize: screenWidth / 18,
+                                              fontSize: screenWidth / 22,
+                                              color: snap[index]['checkOut'] == '--/--' ? primary : Colors.black
                                             ),
                                           ),
                                         ],

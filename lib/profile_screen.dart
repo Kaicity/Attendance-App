@@ -1,5 +1,10 @@
+import 'dart:async';
+
+import 'package:attendance_app/home_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -19,12 +24,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  // final animationsMap = <String, AnimationInfo>{};
+  String memberId = " ";
+
+  late SharedPreferences sharedPreferences;
+
+  @override
+  void initState() {
+    _getUserId();
+  }
+
+  void _getUserId() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    memberId = sharedPreferences.getString("memberId")!;
+  }
 
   @override
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -43,7 +61,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       image: const DecorationImage(
                         fit: BoxFit.cover,
                         image: CachedNetworkImageProvider(
-                          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEAnu7g0FVyu0MY0KfuQ6TvCFEs42-8RPokg&s',
+                          'https://img.freepik.com/free-photo/japan-background-digital-art_23-2151546185.jpg',
                         ),
                       ),
                     ),
@@ -99,7 +117,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
               child: Text(
-                'Nguyen Minh Thong',
+                'Member: $memberId',
                 style: TextStyle(
                     fontFamily: "NexaRegular",
                     fontSize: screenWidth / 24,
@@ -107,9 +125,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
             customFieldInformation("Your Firstname"),
-            customFieldInformation("Your Firstname"),
-            customFieldInformation("Your Firstname"),
-            customFieldInformation("Your Firstname"),
+            customFieldInformation("Your Lastname"),
+            customFieldInformation("Your Birthday"),
+            customFieldInformation("Your Phone"),
             Padding(
               padding: const EdgeInsets.all(18),
               child: Container(
@@ -132,25 +150,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
             ),
-            SizedBox(
-              height: 60,
-              width: screenWidth,
-              child: Center(
-                child: Text(
-                  "Log out",
-                  style: TextStyle(
-                      fontFamily: 'NexaBold',
-                      color: Colors.black54,
-                      fontSize: screenWidth / 20),
-                ),
-              ),
+            Builder(
+              builder: (BuildContext innerContext) {
+                return GestureDetector(
+                  onTap: () async {
+                    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+                    sharedPreferences.remove("memberId");
+
+                    Phoenix.rebirth(innerContext);
+                  },
+                  child: SizedBox(
+                    height: 60,
+                    width: screenWidth,
+                    child: Center(
+                      child: Text(
+                        "Log out",
+                        style: TextStyle(
+                            fontFamily: 'NexaBold',
+                            color: Colors.black54,
+                            fontSize: screenWidth / 20),
+                      ),
+                    ),
+                  ),
+                );
+              }
             ),
           ],
         ),
       ),
     );
   }
-
 
   //Input
   Widget customFieldInformation(String hintText) {

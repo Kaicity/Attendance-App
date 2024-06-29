@@ -3,7 +3,7 @@ import 'package:attendance_app/model/user.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
-import 'package:month_picker_dialog/month_picker_dialog.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'login_screen.dart';
@@ -12,7 +12,11 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  runApp(const MyApp());
+  runApp(
+    Phoenix(
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -23,16 +27,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Attendance timekeeping',
+      title: 'Attendance Timekeeping',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       home: const KeyboardVisibilityProvider(
         child: AuthCheck(),
       ),
-      localizationsDelegates: [
-
-      ],
     );
   }
 }

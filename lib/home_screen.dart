@@ -47,23 +47,29 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _startLocationService() async {
-    // Khoi tao service lay toa do vi tri user
-    LocationService().initialize();
+    try {
+      // Initialize the location service and wait for its completion
+      await LocationService().initialize();
 
-    //get latitude
-    LocationService().getLatitude().then((value) {
-      setState(() {
-        User.lat = value!;
+      // Get latitude
+      LocationService().getLatitude().then((value) {
+        setState(() {
+          User.lat = value!;
+        });
       });
-    });
 
-    //get longitude
-    LocationService().getLongitude().then((value) {
-      setState(() {
-        User.long = value!;
+      // Get longitude
+      LocationService().getLongitude().then((value) {
+        setState(() {
+          User.long = value!;
+        });
       });
-    });
+    } catch (e) {
+      // Handle the exception by showing an error message or taking appropriate action
+      print("Error initializing location service: $e");
+    }
   }
+
 
   _getId() async {
     sharedPreferences = await SharedPreferences.getInstance();
