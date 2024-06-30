@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:attendance_app/home_screen.dart';
+import 'package:attendance_app/model/User.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
@@ -107,7 +108,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
               child: Text(
-                'Nguyen Minh Thong',
+                'グエン・ミン・トン',
                 style: TextStyle(
                   fontFamily: "NexaBold",
                   fontSize: screenWidth / 16,
@@ -117,17 +118,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
               child: Text(
-                'Member: $memberId',
+                'メンバー: $memberId',
                 style: TextStyle(
                     fontFamily: "NexaRegular",
                     fontSize: screenWidth / 24,
                     color: Colors.black54),
               ),
             ),
-            customFieldInformation("Your Firstname"),
-            customFieldInformation("Your Lastname"),
-            customFieldInformation("Your Birthday"),
-            customFieldInformation("Your Phone"),
+            customFieldInformation("あなたの名"),
+            customFieldInformation("あなたの姓"),
+            customFieldInformation("あなたの誕生日"),
+            customFieldInformation("あなたの電話"),
             Padding(
               padding: const EdgeInsets.all(18),
               child: Container(
@@ -141,7 +142,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 child: Center(
                   child: Text(
-                    "Save",
+                    "保存",
                     style: TextStyle(
                         fontFamily: 'NexaBold',
                         color: Colors.white,
@@ -155,7 +156,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 return GestureDetector(
                   onTap: () async {
                     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-                    sharedPreferences.remove("memberId");
+                    sharedPreferences.clear();
+                    User.reset();
 
                     Phoenix.rebirth(innerContext);
                   },
@@ -164,7 +166,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     width: screenWidth,
                     child: Center(
                       child: Text(
-                        "Log out",
+                        "ログアウト",
                         style: TextStyle(
                             fontFamily: 'NexaBold',
                             color: Colors.black54,

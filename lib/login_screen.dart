@@ -9,6 +9,7 @@ class LoginScreen extends StatefulWidget {
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
+
 }
 
 class _LoginScreenState extends State<LoginScreen> {
@@ -65,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 margin: EdgeInsets.only(
                     top: screenHeight / 15, bottom: screenHeight / 30),
                 child: Text(
-                  "Login Account",
+                  "ログインアカウント",
                   style: TextStyle(
                       fontSize: screenWidth / 18, fontFamily: "NexaBold"),
                 ),
@@ -76,14 +77,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    fieldTitle("Member ID: "),
+                    fieldTitle("メンバー ID: "),
                     customeField(
-                        "Enter your ID", idController, Icons.person, false),
+                        "IDを入力してください", idController, Icons.person, false),
                     const SizedBox(
                       height: 15,
                     ),
-                    fieldTitle("Password "),
-                    customeField("Enter your password: ", passController,
+                    fieldTitle("パスワード "),
+                    customeField("パスワードを入力してください： ", passController,
                         Icons.lock, true),
                     GestureDetector(
                       onTap: () async {
@@ -97,14 +98,14 @@ class _LoginScreenState extends State<LoginScreen> {
                             const SnackBar(
                               showCloseIcon: true,
                               content:
-                              Text("Member ID is still"),
+                              Text("会員IDはまだ"),
                             ),
                           );
                         } else if (password.isEmpty) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               showCloseIcon: true,
-                              content: Text("Password is still"),
+                              content: Text("パスワードはまだ"),
                             ),
                           );
                         } else {
@@ -134,7 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   const SnackBar(
                                       showCloseIcon: true,
                                       content:
-                                      Text("Password is incorrect")));
+                                      Text("パスワードが正しくありません")));
                             }
                           } catch (e) {
                             String error = " ";
@@ -142,11 +143,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             if (e.toString() ==
                                 "RangeError (index): Invalid value: Valid value range is empty: 0") {
                               setState(() {
-                                error = "Member is not exist";
+                                error = "メンバーが存在しません";
                               });
                             } else {
                               setState(() {
-                                error = "Have error";
+                                error = "Has error when connect server";
                               });
                             }
 
@@ -171,7 +172,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         child: const Center(
                           child: Text(
-                            "Login",
+                            "ログイン",
                             style: TextStyle(
                               color: Colors.white,
                               fontFamily: "NexaBold",

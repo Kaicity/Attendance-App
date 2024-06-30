@@ -51,9 +51,8 @@ class _AuthCheckState extends State<AuthCheck> {
 
   @override
   void initState() {
-    super.initState();
-
     getCurrentUser();
+    super.initState();
   }
 
   void getCurrentUser() async {

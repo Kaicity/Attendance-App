@@ -38,7 +38,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
             ),
             alignment: Alignment.centerLeft,
             child: Text(
-              "My Attendance",
+              "私の出席",
               style:
                   TextStyle(fontFamily: "NexaBold", fontSize: screenWidth / 18),
             ),
@@ -83,7 +83,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                         }
                       },
                       child: Text(
-                        "Pick a Month",
+                        "月を選ぶ",
                         style: TextStyle(
                             fontFamily: "NexaBold", fontSize: screenWidth / 18),
                       ),
