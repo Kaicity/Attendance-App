@@ -1,11 +1,13 @@
 import 'package:attendance_app/calendar_screen.dart';
-import 'package:attendance_app/model/User.dart';
 import 'package:attendance_app/profile_screen.dart';
+import 'package:attendance_app/services/location_service.dart';
 import 'package:attendance_app/today_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'model/User.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -33,15 +35,41 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    _startLocationService();
     _getId();
     _startTodayScreen();
   }
 
-  _startTodayScreen() {
+  void _startTodayScreen() {
     setState(() {
       currentIndex = 1;
     });
   }
+
+  void _startLocationService() async {
+    try {
+      // Initialize the location service and wait for its completion
+      await LocationService().initialize();
+
+      // Get latitude
+      LocationService().getLatitude().then((value) {
+        setState(() {
+          User.lat = value!;
+        });
+      });
+
+      // Get longitude
+      LocationService().getLongitude().then((value) {
+        setState(() {
+          User.long = value!;
+        });
+      });
+    } catch (e) {
+      // Handle the exception by showing an error message or taking appropriate action
+      print("Error initializing location service: $e");
+    }
+  }
+
 
   _getId() async {
     sharedPreferences = await SharedPreferences.getInstance();
