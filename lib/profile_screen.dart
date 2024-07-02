@@ -57,6 +57,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         User.profilePicLink = value;
       });
     });
+
+    print(User.profilePicLink + "?????");
   }
 
   @override

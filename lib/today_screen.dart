@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:attendance_app/model/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -29,10 +30,13 @@ class _TodayScreenState extends State<TodayScreen> {
 
   late SharedPreferences sharedPreferences;
 
+  bool isLoading = false;
+
   @override
   void initState() {
     _getRecord();
     _getLocation();
+    _loadingData();
   }
 
   void _getLocation() async {
@@ -75,6 +79,28 @@ class _TodayScreenState extends State<TodayScreen> {
     }
     print(checkIn);
     print(checkOut);
+  }
+
+  void _loadingData() async {
+    setState(() {
+      isLoading = true;
+    });
+    Timer(const Duration(seconds: 2), () {
+      setState(() {
+        isLoading = false;
+      });
+    });
+  }
+
+  //Show loading
+  Widget _buildLoadingIndicator() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 5),
+      child: SpinKitWaveSpinner(
+        color: primary, // Thay thế bằng màu primary của bạn
+        size: 25,
+      ),
+    );
   }
 
   @override
@@ -151,13 +177,15 @@ class _TodayScreenState extends State<TodayScreen> {
                               fontSize: screenWidth / 20,
                               color: Colors.black54),
                         ),
-                        Text(
-                          checkIn,
-                          style: TextStyle(
-                            fontFamily: "NexaBold",
-                            fontSize: screenWidth / 18,
-                          ),
-                        ),
+                        isLoading
+                            ? _buildLoadingIndicator()
+                            : Text(
+                                checkIn,
+                                style: TextStyle(
+                                  fontFamily: "NexaBold",
+                                  fontSize: screenWidth / 18,
+                                ),
+                              ),
                       ],
                     ),
                   ),
@@ -173,13 +201,15 @@ class _TodayScreenState extends State<TodayScreen> {
                               fontSize: screenWidth / 20,
                               color: Colors.black54),
                         ),
-                        Text(
-                          checkOut,
-                          style: TextStyle(
-                            fontFamily: "NexaBold",
-                            fontSize: screenWidth / 18,
-                          ),
-                        ),
+                        isLoading
+                            ? _buildLoadingIndicator()
+                            : Text(
+                                checkOut,
+                                style: TextStyle(
+                                  fontFamily: "NexaBold",
+                                  fontSize: screenWidth / 18,
+                                ),
+                              ),
                       ],
                     ),
                   ),
@@ -244,6 +274,7 @@ class _TodayScreenState extends State<TodayScreen> {
                         innerColor: primary,
                         key: key,
                         onSubmit: () async {
+                          _loadingData();
                           Timer(const Duration(seconds: 2), () async {
                             _getLocation();
 
